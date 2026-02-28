@@ -72,9 +72,10 @@ function App() {
                 </ul>
                 <div>
                     <h2>Details</h2>
-                    {selectedTrack === null
-                        ? 'Track is not selected'
-                        : <div>
+                    {!selectedTrack &&  !selectedTrackId && 'Track is not selected'}
+                    {!selectedTrack && selectedTrackId && 'Loading...'}
+                    {selectedTrack && selectedTrackId &&  selectedTrack.id !== selectedTrackId && 'Loading...'}
+                    { selectedTrack && <div>
                             <h3>{selectedTrack.attributes.title }</h3>
                             <h4>Lyrics</h4>
                             <p>
