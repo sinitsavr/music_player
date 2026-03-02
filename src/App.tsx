@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 
-function App() {
+export function App() {
 
     const [selectedTrackId, setSelectedTrackId] = useState(null)
     const [tracks, setTracks] = useState(null)
@@ -16,6 +16,18 @@ function App() {
             .then(json => setTracks(json.data))
 
     }, [])
+
+    useEffect(() => {
+        if(!selectedTrack) return
+        fetch('https://musicfun.it-incubator.app/api/1.0/playlists/tracks/' + selectedTrackId, {
+            headers: {
+                'api-key': '52fbe20e-f68a-45cb-919e-2ae311ceadfb'
+            }
+        }).then(res => res.json())
+            .then(json => setSelectedTrack(json.data))
+
+    }, [selectedTrackId]);
+
     if (tracks === null) {
         return <div>
             <h1>Music Player</h1>
@@ -52,14 +64,7 @@ function App() {
                             }}>
 
                                 <div onClick={() => {
-                                   // setSelectedTrackId(track.id)
-
-                                    fetch('https://musicfun.it-incubator.app/api/1.0/playlists/tracks/' + track.id, {
-                                        headers: {
-                                            'api-key': '52fbe20e-f68a-45cb-919e-2ae311ceadfb'
-                                        }
-                                    }).then(res => res.json())
-                                        .then(json => setSelectedTrack(json.data))
+                                   setSelectedTrackId(track.id)
 
                                 }}>
                                     {track.attributes.title}
@@ -91,4 +96,3 @@ function App() {
     )
 }
 
-export default App
