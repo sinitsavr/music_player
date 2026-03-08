@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 
-export function TracksList() {
+export function TracksList(props) {
 
     const [tracks, setTracks] = useState(null)
 
-    const [selectedTrackId, setSelectedTrackId] = useState(null)
+
 
     useEffect(() => {
         console.log('effect')
@@ -30,20 +30,25 @@ export function TracksList() {
             <span>No Tracks</span>
         </div>
     }
-    return (
 
+    const handleResetClick  = ()=> {
+        props.onTrackSelect?.(null)
+    }
+
+    return <div>
+<button onClick={handleResetClick}> reset</button>
+        <hr/>
     <ul>
         {tracks.map((track) => {
-
+            const handleClick = () => {
+                    props.onTrackSelect?.(track.id)
+            }
             return (
                 <li key={track.id} style={{
-                    border: track.id === selectedTrackId  ? '1px solid violet' : 'none',
+                    border: track.id === props.selectedTrackId  ? '1px solid violet' : 'none',
                 }}>
 
-                    <div onClick={() => {
-                       setSelectedTrackId(track.id)
-
-                    }}>
+                    <div onClick={handleClick}>
                         {track.attributes.title}
                     </div>
                     <audio src={track.attributes.attachments[0].url} controls></audio>
@@ -52,5 +57,5 @@ export function TracksList() {
             )
         })}
     </ul>
-    )
+        </div>
 }

@@ -1,11 +1,14 @@
 import {useEffect, useState} from "react";
 
-export function TrackDetail() {
+export function TrackDetail(props) {
     const [selectedTrack, setSelectedTrack ] = useState(null)
-    const selectedTrackId = '896e6fdc-7c64-46bc-8e49-4dee3e028b0f'
+    const selectedTrackId = props.trackId
 
     useEffect(() => {
-        if(!selectedTrack) return
+        if(!selectedTrackId) {
+            setSelectedTrack(null)
+            return
+        }
         fetch('https://musicfun.it-incubator.app/api/1.0/playlists/tracks/' + selectedTrackId, {
             headers: {
                 'api-key': '52fbe20e-f68a-45cb-919e-2ae311ceadfb'
