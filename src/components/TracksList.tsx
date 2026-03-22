@@ -1,19 +1,23 @@
 import {useEffect, useState} from "react";
+import {TrackItem} from "./TrackItem.tsx";
+import {getTracks, type TrackListItemResource} from "../dal/api.ts";
 
-export function TracksList(props) {
 
-    const [tracks, setTracks] = useState(null)
+
+type Props = {
+    selectedTrackId: string | null,
+    onTrackSelect: (id: string | null) => void
+}
+export function TracksList({selectedTrackId,onTrackSelect}: Props) {
+
+    const [tracks, setTracks] = useState<Array<TrackListItemResource> | null>(null)
 
 
 
     useEffect(() => {
         console.log('effect')
-        fetch('https://musicfun.it-incubator.app/api/1.0/playlists/tracks', {
-            headers: {
-                'api-key': '52fbe20e-f68a-45cb-919e-2ae311ceadfb'
-            }
-        }).then(res => res.json())
-            .then(json => setTracks(json.data))
+
+            getTracks().then(json => setTracks(json.data))
 
     }, [])
 
@@ -32,30 +36,26 @@ export function TracksList(props) {
     }
 
     const handleResetClick  = ()=> {
-        props.onTrackSelect?.(null)
+        onTrackSelect?.(null)
     }
-
+    const handleClick = (trackId: string) => {
+        onTrackSelect?.(trackId)}
     return <div>
 <button onClick={handleResetClick}> reset</button>
         <hr/>
     <ul>
         {tracks.map((track) => {
-            const handleClick = () => {
-                    props.onTrackSelect?.(track.id)
-            }
             return (
-                <li key={track.id} style={{
-                    border: track.id === props.selectedTrackId  ? '1px solid violet' : 'none',
-                }}>
 
-                    <div onClick={handleClick}>
-                        {track.attributes.title}
-                    </div>
-                    <audio src={track.attributes.attachments[0].url} controls></audio>
-                </li>
-
+<TrackItem key={track.id}
+track={track}
+           isSelected={track.id === selectedTrackId}
+selectedTrackId={selectedTrackId}
+onSelect={handleClick}
+/>
             )
         })}
     </ul>
         </div>
 }
+

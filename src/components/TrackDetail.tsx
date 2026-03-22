@@ -1,29 +1,31 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState} from "react";
+import {getTrack, type TrackDetailsResource } from "../dal/api.ts";
 
-export function TrackDetail(props) {
-    const [selectedTrack, setSelectedTrack ] = useState(null)
-    const selectedTrackId = props.trackId
+
+
+type Props = {
+    trackId: string | null
+}
+
+export function TrackDetail({trackId}: Props) {
+   const [selectedTrack, setSelectedTrack ] = useState<TrackDetailsResource | null>(null)
 
     useEffect(() => {
-        if(!selectedTrackId) {
+        if(!trackId) {
             setSelectedTrack(null)
             return
         }
-        fetch('https://musicfun.it-incubator.app/api/1.0/playlists/tracks/' + selectedTrackId, {
-            headers: {
-                'api-key': '52fbe20e-f68a-45cb-919e-2ae311ceadfb'
-            }
-        }).then(res => res.json())
-            .then(json => setSelectedTrack(json.data))
+        const promise = getTrack(trackId)
+            promise.then(json => setSelectedTrack(json.data))
 
-    }, [selectedTrackId]);
+    }, [trackId]);
 
 
     return  <div>
         <h2>Details</h2>
-        {!selectedTrack && !selectedTrackId && 'Track is not selected'}
-        {!selectedTrack && selectedTrackId && 'Loading...'}
-        {selectedTrack && selectedTrackId &&  selectedTrack.id !== selectedTrackId && 'Loading...'}
+        {!selectedTrack && !trackId && 'Track is not selected'}
+        {!selectedTrack && trackId && 'Loading...'}
+        {selectedTrack && trackId &&  trackId !== trackId && 'Loading...'}
         { selectedTrack && <div>
             <h3>{selectedTrack.attributes.title }</h3>
             <h4>Lyrics</h4>
