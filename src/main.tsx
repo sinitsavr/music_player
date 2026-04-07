@@ -1,11 +1,9 @@
 import {createRoot} from 'react-dom/client'
 import './index.css'
-import {useState} from "react";
-import {TracksList} from "./components/TracksList.tsx";
-import {TrackDetail} from "./components/TrackDetail.tsx";
-import {Footer} from "./components/Footer.tsx";
-
-
+import {TracksList} from "./ui/TracksList.tsx";
+import {TrackDetail} from "./ui/TrackDetail.tsx";
+import {Footer} from "./ui/Footer.tsx";
+import {useTrackSelection} from "./bll/useTrackSelection.tsx";
 
 const rootEl = document.getElementById('root')
 const reactRoot = createRoot(rootEl!);
@@ -14,7 +12,7 @@ reactRoot.render(<Main/>)
 
 function Main() {
 
-    const [trackId, setTrackId] = useState<Array | null>(null)
+    const {trackId, setTrackId} = useTrackSelection()
     const handleTrackSelect = (id )=>{
         setTrackId(id)
     }

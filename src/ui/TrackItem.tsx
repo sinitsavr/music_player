@@ -1,3 +1,6 @@
+import type {TrackListItemResource} from "../dal/api.ts";
+
+
 type Props = {
     isSelected: boolean,
     onSelect: (trackId: string) => void,
