@@ -1,19 +1,24 @@
 import type {TrackListItemResource} from "../dal/api.ts";
-
-
+import styles from "./TrackList.module.css"
+import clsx from "clsx";
 type Props = {
     isSelected: boolean,
     onSelect: (trackId: string) => void,
+    track: TrackListItemResource
 }
+
+
 
 export function TrackItem({onSelect, track, isSelected }: Props) {
     const handleClick = () => onSelect?.(track.id)
-
+    const obj = {
+        [styles.track]: true,
+        [styles.selected]: isSelected,
+    }
+п
     return (
 
-        <li key={track.id} style={{
-            border: isSelected ? '1px solid violet' : 'none',
-        }}>
+        <li className={className} key={track.id}>
 
             <div onClick={handleClick}>
                 {track.attributes.title}

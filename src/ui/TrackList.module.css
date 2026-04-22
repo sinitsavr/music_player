@@ -1,0 +1,14 @@
+.tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.track {
+    border: 1px solid #646cff;
+    border-radius: 9px;
+    padding: 10px
+}
+
+.track.selected {
+    border-color: white;
+}

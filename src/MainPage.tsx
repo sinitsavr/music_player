@@ -1,0 +1,23 @@
+import {useTrackSelection} from "./bll/useTrackSelection.tsx";
+import {TracksList} from "./ui/TracksList.tsx";
+import {TrackDetail} from "./ui/TrackDetail.tsx";
+import {Footer} from "./ui/Footer.tsx";
+
+export function MainPage() {
+
+    const {trackId, setTrackId} = useTrackSelection()
+    const handleTrackSelect = (id) => {
+        setTrackId(id)
+    }
+    return <div>
+        <div style={{display: 'flex', gap: '40px'}}>
+            <TracksList
+                selectedTrackId={trackId}
+                onTrackSelect={
+                    handleTrackSelect}
+            />
+            <TrackDetail trackId={trackId}/>
+        </div>
+        <Footer/>
+    </div>
+}
