@@ -6,7 +6,7 @@ import {Footer} from "./ui/Footer.tsx";
 export function MainPage() {
 
     const {trackId, setTrackId} = useTrackSelection()
-    const handleTrackSelect = (id) => {
+    const handleTrackSelect = (id: any) => {
         setTrackId(id)
     }
     return <div>
