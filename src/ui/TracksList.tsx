@@ -37,12 +37,12 @@ const {tracks} = useTracks()
         {tracks.map((track) => {
             return (
 
-<TrackItem key={track.id}
-track={track}
-           isSelected={track.id === selectedTrackId}
-selectedTrackId={selectedTrackId}
-onSelect={handleClick}
-/>
+                <TrackItem
+                    key={track.id}
+                    track={track}
+                    isSelected={track.id === selectedTrackId}
+                    onSelect={handleClick}
+                />
             )
         })}
     </ul>

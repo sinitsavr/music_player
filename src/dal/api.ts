@@ -48,9 +48,9 @@ export type TrackListItemResource = {
     attributes: TrackListItemOutputAttributes
 }
 
-type GetTrackListOutput = {
-    data: Array<TrackListItemResource>
-}
+// type GetTrackListOutput = {
+//     data: Array<TrackListItemResource>
+// }
 
 // export const getTracks = () => {
 //   const promise: Promise<GetTrackListOutput> =  fetch('https://musicfun.it-incubator.app/api/1.0/playlists/tracks', {
